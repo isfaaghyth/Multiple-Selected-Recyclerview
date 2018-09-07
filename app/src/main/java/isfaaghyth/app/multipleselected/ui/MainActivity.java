@@ -74,22 +74,20 @@ public class MainActivity extends AppCompatActivity {
         TimeAdapter adapter = new TimeAdapter(this, times);
         adapter.setListener(new TimeListener() {
             @Override public void onTimeClicked(View view, String root, Integer values) {
-                if (inMap(collectTime, root, values)) {
+                if (!inMap(collectTime, root, values)) {
+                    List<Integer> time = new ArrayList<>();
+                    time.add(values);
+                    if (!collectTime.containsKey(root)) {
+                        collectTime.put(root, time);
+                    } else {
+                        time = collectTime.get(root);
+                        time.add(values);
+                        collectTime.put(root, time);
+                    }
+                    view.setBackgroundColor(Color.YELLOW);
+                } else {
                     collectTime.get(root).remove(values);
                     view.setBackgroundColor(Color.WHITE);
-                    return;
-                } else {
-                    view.setBackgroundColor(Color.YELLOW);
-                }
-
-                List<Integer> time = new ArrayList<>();
-                time.add(values);
-                if (!collectTime.containsKey(root)) {
-                    collectTime.put(root, time);
-                } else {
-                    time = collectTime.get(root);
-                    time.add(values);
-                    collectTime.put(root, time);
                 }
             }
         });
