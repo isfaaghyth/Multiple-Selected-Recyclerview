@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
             @Override public void onTimeClicked(View view, String root, Integer values) {
                 if (!inMap(collectTime, root, values)) {
                     List<Integer> time = new ArrayList<>();
-                    time.add(values);
                     if (!collectTime.containsKey(root)) {
+                        time.add(values);
                         collectTime.put(root, time);
                     } else {
                         time = collectTime.get(root);
